@@ -1,64 +1,35 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Procesador de Documentos Legales</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.8.0/firebase-app-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.8.0/firebase-firestore-compat.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.8.0/firebase-storage-compat.min.js"></script>
+    <title>Sistema Legal IA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai@0.1.3/dist/index.min.js"></script>
-    
-    <!-- Nuestros scripts -->
-    <script src="firebase-config.js"></script>
-<script src="legal-document-processor.js"></script> <!-- Este script debe cargarse antes -->
-<script src="app.js" defer></script> <!-- Este script usa la función, por lo que debe cargarse después -->
-
-    
+    <script type="module" src="./js/app.js"></script>
 </head>
-<body class="min-h-screen bg-gray-50 p-8">
-    <div class="max-w-4xl mx-auto">
-        <!-- Sección de carga -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 class="text-2xl font-bold mb-4">Cargar Documento Legal</h2>
+<body class="bg-gray-50 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto space-y-6">
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h1 class="text-2xl font-bold mb-4">Gestor de Casos Legales</h1>
+            <div class="grid gap-4 mb-6">
+                <input type="text" id="caseNumber" placeholder="Número de Proceso" class="p-2 border rounded">
+                <select id="caseType" class="p-2 border rounded">
+                    <option value="Civil">Civil</option>
+                    <option value="Penal">Penal</option>
+                    <option value="Laboral">Laboral</option>
+                </select>
+            </div>
             
-            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                <input
-                    type="file"
-                    accept=".pdf"
-                    id="fileInput"
-                    class="hidden"
-                />
-                <label 
-                    for="fileInput" 
-                    class="cursor-pointer flex flex-col items-center"
-                >
-                    <svg class="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                    </svg>
-                    <span class="text-gray-600 mb-2" id="uploadLabel">
-                        Arrastra un PDF o haz clic para seleccionar
-                    </span>
-                    <span class="text-sm text-gray-500">Solo archivos PDF</span>
+            <div class="border-t pt-4">
+                <input type="file" id="documents" accept=".pdf" class="hidden" multiple>
+                <label for="documents" class="cursor-pointer bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 inline-block">
+                    Subir Documentos PDF
                 </label>
-            </div>
-
-            <!-- Estado de la carga -->
-            <div id="uploadStatus" class="mt-4 p-4 rounded-lg items-center hidden">
+                <div id="fileList" class="mt-4 space-y-2"></div>
             </div>
         </div>
 
-        <!-- Lista de documentos -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-2xl font-bold mb-4">Documentos Procesados</h2>
-            <div id="documentsList" class="divide-y divide-gray-200">
-                <!-- Los documentos se cargarán aquí dinámicamente -->
-            </div>
-        </div>
+        <div id="status" class="p-4 bg-white rounded-xl shadow-lg transition-all duration-300"></div>
     </div>
-
-   
 </body>
 </html>
